@@ -38,3 +38,6 @@ if [ -f .env ]; then
 else
     echo "Файл .env не найден"
 fi
+
+# Создать директорию для хранения истории сообщений
+mkdir -vp data/history/
