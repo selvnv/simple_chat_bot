@@ -8,12 +8,22 @@ from requests.exceptions import JSONDecodeError
 from datetime import datetime
 from enum import Enum
 
-load_dotenv('.env')
+# Обертка над os.environ.get для очистки переменной от возможных спецсимволов
+def get_env_var(name: str = None):
+    if name is None:
+        return None
 
-GIGACHAT_AUTH_URL = os.environ.get("GIGACHAT_AUTH_URL")
-GIGACHAT_AUTHORIZE_KEY = os.environ.get("GIGACHAT_AUTHORIZE_KEY")
-GIGACHAT_REQUEST_URL = os.environ.get("GIGACHAT_REQUEST_URL")
-GIGACHAT_MODEL = os.environ.get("GIGACHAT_MODEL")
+    var = os.environ.get(name)
+
+    if var is None:
+        return None
+
+    return var.strip()
+
+GIGACHAT_AUTH_URL = get_env_var("GIGACHAT_AUTH_URL")
+GIGACHAT_AUTHORIZE_KEY = get_env_var("GIGACHAT_AUTHORIZE_KEY")
+GIGACHAT_REQUEST_URL = get_env_var("GIGACHAT_REQUEST_URL")
+GIGACHAT_MODEL = get_env_var("GIGACHAT_MODEL")
 
 if not GIGACHAT_REQUEST_URL:
     raise ValueError("GIGACHAT_REQUEST_URL не установлена в окружении")
